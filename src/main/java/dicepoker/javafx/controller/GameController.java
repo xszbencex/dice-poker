@@ -12,16 +12,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class GameController {
 
     private GameState gameState;
-    private List<String> usernames;
     private List<Image> diceImages;
-    private final IntegerProperty roundCount = new SimpleIntegerProperty();
-    private final StringProperty currentPlayer = new SimpleStringProperty();
+    private final List<ImageView> imageViews = new ArrayList<>();
+    private final IntegerProperty roundCount = new SimpleIntegerProperty(0);
+    private final StringProperty currentPlayerName = new SimpleStringProperty();
     private final StringProperty currentHand = new SimpleStringProperty();
 
     @FXML
@@ -39,10 +40,10 @@ public class GameController {
     @FXML
     private Label handLabel;
 
-    public void initUsername(List<String> usernames) {
-        this.gameState.playerCount = usernames.size();
-        this.usernames = usernames;
-        currentPlayer.set(usernames.get(0));
+    public void initGameState(List<String> usernames) {
+        gameState = new GameState(usernames);
+        currentPlayerName.set(usernames.get(0));
+        displayCurrentState();
     }
 
     @FXML
@@ -50,20 +51,31 @@ public class GameController {
         diceImages = IntStream.range(1, 7)
                 .mapToObj(i -> new Image(getClass().getResource("/images/dice_" + i + ".png").toExternalForm()))
                 .toList();
-        ((ImageView) imageGrid.getChildren().get(0)).setImage(diceImages.get(0));
-        ((ImageView) imageGrid.getChildren().get(1)).setImage(diceImages.get(1));
-        ((ImageView) imageGrid.getChildren().get(2)).setImage(diceImages.get(2));
-        ((ImageView) imageGrid.getChildren().get(3)).setImage(diceImages.get(3));
-        ((ImageView) imageGrid.getChildren().get(4)).setImage(diceImages.get(4));
-        ((ImageView) imageGrid.getChildren().get(5)).setImage(diceImages.get(5));
-        gameState = new GameState();
-        currentPlayerLabel.textProperty().bind(currentPlayer);
+        currentPlayerLabel.textProperty().bind(currentPlayerName);
         roundCounterLabel.textProperty().bind(roundCount.asString());
         handLabel.textProperty().bind(currentHand);
+        imageGrid.getChildren().forEach(node -> imageViews.add((ImageView) node));
     }
 
     @FXML
     public void nextAction() {
+        clearImages();
+        this.gameState.getCurrentGameRound().nextTurn();
+        currentPlayerName.setValue(this.gameState.getCurrentGameRound().getCurrentPlayerName());
+        // this.displayCurrentState();
+        if (this.gameState.getCurrentGameRound().isRoundOver()) {
+            nextButton.setText("End round");
+        }
+    }
 
+    private void displayCurrentState() {
+        List<Integer> numbers = this.gameState.getCurrentGameRound().getThrownNumbers();
+        for (int i = 0; i < 5; i++) {
+            imageViews.get(i).setImage(diceImages.get(numbers.get(i) - 1));
+        }
+    }
+
+    private void clearImages() {
+        imageViews.forEach(imageView -> imageView.setImage(null));
     }
 }

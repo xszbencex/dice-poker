@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -85,8 +87,11 @@ public class LaunchController {
         FXMLLoader fxmlLoader = new FXMLLoader(LaunchController.class.getResource("/fxml/game.fxml"));
         Parent root = fxmlLoader.load();
         GameController controller = fxmlLoader.getController();
-        controller.initUsername(this.createUsernameList());
+        controller.initGameState(this.createUsernameList());
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2 - 150);
+        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2 - 50);
         stage.setScene(new Scene(root));
         stage.show();
     }
