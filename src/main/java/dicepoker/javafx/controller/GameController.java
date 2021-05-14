@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -42,8 +43,9 @@ public class GameController {
 
     public void initGameState(List<String> usernames) {
         gameState = new GameState(usernames);
-        currentPlayerName.set(usernames.get(0));
-        displayCurrentState();
+        currentPlayerName.setValue(usernames.get(0));
+        roundCount.setValue(gameState.getRoundCount());
+        setImagesForCurrentState();
     }
 
     @FXML
@@ -59,16 +61,26 @@ public class GameController {
 
     @FXML
     public void nextAction() {
-        clearImages();
-        this.gameState.getCurrentGameRound().nextTurn();
-        currentPlayerName.setValue(this.gameState.getCurrentGameRound().getCurrentPlayerName());
-        // this.displayCurrentState();
-        if (this.gameState.getCurrentGameRound().isRoundOver()) {
-            nextButton.setText("End round");
+        if (gameState.getCurrentGameRound().isLastTurn()) {
+            showWinnerAlert();
+            clearImages();
+            gameState.finishRound();
+            roundCount.setValue(gameState.getRoundCount());
+            currentPlayerName.setValue(gameState.getCurrentGameRound().getCurrentPlayerName());
+            setImagesForCurrentState();
+            nextButton.setText("Next Player");
+        } else {
+            clearImages();
+            gameState.getCurrentGameRound().nextTurn();
+            currentPlayerName.setValue(gameState.getCurrentGameRound().getCurrentPlayerName());
+            setImagesForCurrentState();
+            if (this.gameState.getCurrentGameRound().isLastTurn()) {
+                nextButton.setText("End Round");
+            }
         }
     }
 
-    private void displayCurrentState() {
+    private void setImagesForCurrentState() {
         List<Integer> numbers = this.gameState.getCurrentGameRound().getThrownNumbers();
         for (int i = 0; i < 5; i++) {
             imageViews.get(i).setImage(diceImages.get(numbers.get(i) - 1));
@@ -77,5 +89,12 @@ public class GameController {
 
     private void clearImages() {
         imageViews.forEach(imageView -> imageView.setImage(null));
+    }
+
+    private void showWinnerAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Alert");
+        alert.setHeaderText("The winner is " + gameState.getCurrentGameRound().getRoundWinner());
+        alert.showAndWait();
     }
 }

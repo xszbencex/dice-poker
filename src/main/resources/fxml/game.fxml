@@ -73,7 +73,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="roundCounterLabel" prefHeight="30.0" prefWidth="14.0" text="0">
+                  <Label fx:id="roundCounterLabel" prefHeight="30.0" prefWidth="32.0" text="0">
                      <font>
                         <Font size="20.0" />
                      </font>
