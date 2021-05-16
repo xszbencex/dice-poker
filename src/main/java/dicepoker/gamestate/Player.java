@@ -10,6 +10,6 @@ public class Player {
 
     Player(String username) {
         this.username = username;
-        roundsWon = 0;
+        this.roundsWon = 0;
     }
 }

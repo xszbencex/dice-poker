@@ -14,20 +14,24 @@ public class GameState {
     private List<Player> playerList = new ArrayList<>();
 
     public GameState(List<String> usernames) {
-        roundCount = 1;
-        usernames.forEach(username -> playerList.add(new Player(username)));
-        final int playerCount = playerList.size();
+        this.roundCount = 1;
+        usernames.forEach(username -> this.playerList.add(new Player(username)));
+        final int playerCount = this.playerList.size();
         if (playerCount < 4) {
             for (int i = 1; i <= 4 - playerCount; i++) {
-                playerList.add(new Player("Bot" + i));
+                this.playerList.add(new Player("Bot" + i));
             }
         }
-        currentGameRound = new GameRound(playerList);
-        lastRound = false;
+        this.currentGameRound = new GameRound(playerList);
+        this.lastRound = false;
     }
 
     public void finishRound() {
-        currentGameRound = new GameRound(playerList);
-        ++roundCount;
+        Player winner = playerList.stream()
+                .filter(player -> player.username.equals(this.currentGameRound.getRoundWinner()))
+                .findFirst().get();
+        ++winner.roundsWon;
+        this.currentGameRound = new GameRound(playerList);
+        ++this.roundCount;
     }
 }

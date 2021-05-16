@@ -46,6 +46,7 @@ public class GameController {
         currentPlayerName.setValue(usernames.get(0));
         roundCount.setValue(gameState.getRoundCount());
         setImagesForCurrentState();
+        currentHand.setValue(this.gameState.getCurrentGameRound().getCurrentHand());
     }
 
     @FXML
@@ -67,12 +68,14 @@ public class GameController {
             gameState.finishRound();
             roundCount.setValue(gameState.getRoundCount());
             currentPlayerName.setValue(gameState.getCurrentGameRound().getCurrentPlayerName());
+            currentHand.setValue(this.gameState.getCurrentGameRound().getCurrentHand());
             setImagesForCurrentState();
             nextButton.setText("Next Player");
         } else {
             clearImages();
             gameState.getCurrentGameRound().nextTurn();
             currentPlayerName.setValue(gameState.getCurrentGameRound().getCurrentPlayerName());
+            currentHand.setValue(this.gameState.getCurrentGameRound().getCurrentHand());
             setImagesForCurrentState();
             if (this.gameState.getCurrentGameRound().isLastTurn()) {
                 nextButton.setText("End Round");
