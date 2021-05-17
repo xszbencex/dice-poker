@@ -80,7 +80,8 @@ public class GameRound {
             }
             case 4 -> {
                 currentPlayer.hand = Hand.FOUR_OF_A_KIND;
-                currentPlayer.thrownValue = currentPlayer.hand.baseValue + mostFrequent * SECOND_WEIGHT + this.sumOfOthers(frequencyByIndex, mostOfAKind);
+                currentPlayer.thrownValue = currentPlayer.hand.baseValue + mostFrequent * SECOND_WEIGHT
+                        + this.sumOfOthers(frequencyByIndex, mostOfAKind);
             }
             case 3 -> {
                 if (frequencyByIndex.contains(2)) {
@@ -88,16 +89,19 @@ public class GameRound {
                 } else {
                     currentPlayer.hand = Hand.THREE_OF_A_KIND;
                 }
-                currentPlayer.thrownValue = currentPlayer.hand.baseValue + mostFrequent * SECOND_WEIGHT + this.sumOfOthers(frequencyByIndex, mostOfAKind);
+                currentPlayer.thrownValue = currentPlayer.hand.baseValue + mostFrequent * SECOND_WEIGHT
+                        + this.sumOfOthers(frequencyByIndex, mostOfAKind);
             }
             case 2 -> {
                 if (frequencyByIndex.indexOf(2) != frequencyByIndex.lastIndexOf(2)) {
                     currentPlayer.hand = Hand.TWO_PAIR;
-                    currentPlayer.thrownValue = currentPlayer.hand.baseValue + (frequencyByIndex.indexOf(2) + frequencyByIndex.lastIndexOf(2)) * SECOND_WEIGHT +
+                    currentPlayer.thrownValue = currentPlayer.hand.baseValue +
+                            (frequencyByIndex.indexOf(2) + frequencyByIndex.lastIndexOf(2)) * SECOND_WEIGHT +
                             this.sumOfOthers(frequencyByIndex, mostOfAKind);
                 } else {
                     currentPlayer.hand = Hand.ONE_PAIR;
-                    currentPlayer.thrownValue = currentPlayer.hand.baseValue + mostFrequent * SECOND_WEIGHT + this.sumOfOthers(frequencyByIndex, mostOfAKind);
+                    currentPlayer.thrownValue = currentPlayer.hand.baseValue + mostFrequent * SECOND_WEIGHT
+                            + this.sumOfOthers(frequencyByIndex, mostOfAKind);
                 }
             }
             case 1 -> {

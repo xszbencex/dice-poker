@@ -6,7 +6,8 @@
 
     <groupId>hu.unideb.inf</groupId>
     <artifactId>cube-poker</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+    <packaging>jar</packaging>
 
     <developers>
         <developer>
@@ -21,7 +22,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.releas>16</maven.compiler.releas>
-        <exec.mainClass>dicepoker.javafx.Main</exec.mainClass>
+        <exec.mainClass>dicepoker.Main</exec.mainClass>
         <jackson-databind.version>2.12.1</jackson-databind.version>
         <log4j.version>2.14.1</log4j.version>
         <javafx.version>16</javafx.version>
@@ -95,10 +96,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>6.0.16.Final</version>
-            <scope>compile</scope>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.19</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>

@@ -1,8 +1,8 @@
 package dicepoker.gamestate;
 
-import lombok.ToString;
+import lombok.Data;
 
-@ToString
+@Data
 public class Player {
 
     String username;

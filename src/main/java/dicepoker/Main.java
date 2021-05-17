@@ -1,5 +1,6 @@
-package dicepoker.javafx;
+package dicepoker;
 
+import dicepoker.javafx.DicePokerApplication;
 import javafx.application.Application;
 
 public class Main {

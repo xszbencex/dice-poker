@@ -10,11 +10,11 @@ public class GameState {
 
     private GameRound currentGameRound;
     private int roundCount;
+    private int numberOfRounds;
     private boolean lastRound;
     private List<Player> playerList = new ArrayList<>();
 
-    public GameState(List<String> usernames) {
-        this.roundCount = 1;
+    public GameState(List<String> usernames, int numberOfRounds) {
         usernames.forEach(username -> this.playerList.add(new Player(username)));
         final int playerCount = this.playerList.size();
         if (playerCount < 4) {
@@ -22,6 +22,8 @@ public class GameState {
                 this.playerList.add(new Player("Bot" + i));
             }
         }
+        this.numberOfRounds = numberOfRounds;
+        this.roundCount = 1;
         this.currentGameRound = new GameRound(playerList);
         this.lastRound = false;
     }
@@ -31,7 +33,11 @@ public class GameState {
                 .filter(player -> player.username.equals(this.currentGameRound.getRoundWinner()))
                 .findFirst().get();
         ++winner.roundsWon;
-        this.currentGameRound = new GameRound(playerList);
-        ++this.roundCount;
+        if (this.roundCount != this.numberOfRounds) {
+            this.currentGameRound = new GameRound(playerList);
+            ++this.roundCount;
+        } else {
+            this.lastRound = true;
+        }
     }
 }

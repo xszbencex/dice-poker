@@ -66,9 +66,19 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+            <HBox fx:id="roundHBox" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="40.0" prefWidth="99.0" text="Round: 10/">
+                  <Label prefHeight="40.0" prefWidth="63.0" text="Round:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="numberOfRoundsLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="21.0" text="5">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label text="/">
                      <font>
                         <Font size="20.0" />
                      </font>

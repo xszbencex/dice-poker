@@ -14,12 +14,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
+@Log4j2
 public class LaunchController {
 
     private int playerCount = 1;
@@ -84,6 +86,7 @@ public class LaunchController {
             errorLabel.setVisible(true);
             return;
         }
+        log.info("Starting game...");
         FXMLLoader fxmlLoader = new FXMLLoader(LaunchController.class.getResource("/fxml/game.fxml"));
         Parent root = fxmlLoader.load();
         GameController controller = fxmlLoader.getController();
