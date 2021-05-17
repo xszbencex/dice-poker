@@ -73,7 +73,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="numberOfRoundsLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="21.0" text="5">
+                  <Label fx:id="numberOfRoundsLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="22.0" text="10">
                      <font>
                         <Font size="20.0" />
                      </font>

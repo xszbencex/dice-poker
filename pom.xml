@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>hu.unideb.inf</groupId>
-    <artifactId>cube-poker</artifactId>
+    <artifactId>dice-poker</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
@@ -29,9 +29,9 @@
     </properties>
 
     <scm>
-        <url>https://github.com/xszbencex/cube-poker</url>
-        <connection>scm:git:https://github.com/xszbencex/cube-poker.git</connection>
-        <developerConnection>scm:git:https://github.com/xszbencex/cube-poker.git</developerConnection>
+        <url>https://github.com/xszbencex/dice-poker</url>
+        <connection>scm:git:https://github.com/xszbencex/dice-poker.git</connection>
+        <developerConnection>scm:git:https://github.com/xszbencex/dice-poker.git</developerConnection>
     </scm>
 
     <dependencies>

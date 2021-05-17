@@ -36,7 +36,7 @@ import java.util.stream.IntStream;
 @Log4j2
 public class GameController {
 
-    private final static int NUMBER_OF_ROUNDS = 2;
+    private final static int NUMBER_OF_ROUNDS = 10;
 
     private final PlayerResultDao playerResultDao = PlayerResultDao.getInstance();
     private GameState gameState;
