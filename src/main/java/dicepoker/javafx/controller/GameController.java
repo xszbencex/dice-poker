@@ -198,10 +198,10 @@ public class GameController {
                 PlayerResult playerResult = playerResultDao.findByUsername(filteredAndSortedList.get(i).getUsername());
                 log.info("Updating {}'s results", filteredAndSortedList.get(i).getUsername());
                 switch (i) {
-                    case 0 -> playerResult.setFirst(playerResult.getFirst() + 1);
-                    case 1 -> playerResult.setSecond(playerResult.getSecond() + 1);
-                    case 2 -> playerResult.setThird(playerResult.getThird() + 1);
-                    case 3 -> playerResult.setFourth(playerResult.getFourth() + 1);
+                    case 0: playerResult.setFirst(playerResult.getFirst() + 1);
+                    case 1: playerResult.setSecond(playerResult.getSecond() + 1);
+                    case 2: playerResult.setThird(playerResult.getThird() + 1);
+                    case 3: playerResult.setFourth(playerResult.getFourth() + 1);
                 }
                 playerResultDao.update(playerResult);
             }

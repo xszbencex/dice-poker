@@ -1,5 +1,9 @@
 package dicepoker.gamestate;
 
+/**
+ * Enum class that represents a <a href="https://en.wikipedia.org/wiki/Poker_dice">Poker hand</a>
+ * and it's weight compared to the other's for determining the thrown value.
+ */
 public enum Hand {
 
     BUST ("Bust", 0),

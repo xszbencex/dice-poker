@@ -23,6 +23,13 @@ public class PlayerResultDao extends GenericJpaDao<PlayerResult> {
         return instance;
     }
 
+    /**
+     * Returns the list of {@code n} players, ordered by their number of wins then
+     * second places, then third places and lastly fourth places.
+     *
+     * @param n the maximum number of results to be returned
+     * @return the list of {@code n} best results
+     */
     @Transactional
     public List<PlayerResult> findBest(int n) {
         return entityManager.createQuery("SELECT r FROM PlayerResult r ORDER BY r.first DESC, r.second DESC, r.third DESC, r.fourth DESC", PlayerResult.class)
@@ -30,6 +37,13 @@ public class PlayerResultDao extends GenericJpaDao<PlayerResult> {
                 .getResultList();
     }
 
+    /**
+     * Returns a PlayerResult object with the given {@code username}, or
+     * returns {@code null}, if there is no player with, the specific username.
+     *
+     * @param username the username of the player
+     * @return the list of {@code n} best results
+     */
     @Transactional
     public PlayerResult findByUsername(String username) {
         try {
