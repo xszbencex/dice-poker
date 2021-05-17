@@ -41,10 +41,22 @@ public class LaunchController {
         final ObservableList<Node> elements = grid.getChildren();
         for (int i = 0; i < 14; i++) {
             switch (i) {
-                case 0: case 1: case 2: case 3: labels.add((Label) elements.get(i));
-                case 4: case 5: case 6: case 7: textFields.add((TextField) elements.get(i));
-                case 8: case 9: case 10: removeButtons.add((Button) elements.get(i));
-                case 11: case 12: case 13: addButtons.add((Button) elements.get(i));
+                case 0: case 1: case 2: case 3: {
+                    labels.add((Label) elements.get(i));
+                    break;
+                }
+                case 4: case 5: case 6: case 7: {
+                    textFields.add((TextField) elements.get(i));
+                    break;
+                }
+                case 8: case 9: case 10: {
+                    removeButtons.add((Button) elements.get(i));
+                    break;
+                }
+                case 11: case 12: case 13: {
+                    addButtons.add((Button) elements.get(i));
+                    break;
+                }
             }
         }
     }
