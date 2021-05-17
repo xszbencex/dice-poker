@@ -48,7 +48,7 @@ public class GameState {
      *
      * @param usernames usernames provided in the {@code TextFields}
      */
-    private void initializePlayers(List<String> usernames) {
+    public void initializePlayers(List<String> usernames) {
         usernames.forEach(username -> this.playerList.add(new Player(username)));
         final int playerCount = this.playerList.size();
         if (playerCount < 4) {

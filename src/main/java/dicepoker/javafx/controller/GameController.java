@@ -75,7 +75,7 @@ public class GameController {
         currentPlayerName.setValue(usernames.get(0));
         roundCount.setValue(gameState.getRoundCount());
         setImagesForCurrentState();
-        currentHand.setValue(this.gameState.getCurrentGameRound().getCurrentHand());
+        currentHand.setValue(this.gameState.getCurrentGameRound().getCurrentPlayer().getHand().name);
     }
 
     @FXML
@@ -104,8 +104,8 @@ public class GameController {
         log.info("Loading next player");
         clearImages();
         gameState.getCurrentGameRound().nextTurn();
-        currentPlayerName.setValue(gameState.getCurrentGameRound().getCurrentPlayerName());
-        currentHand.setValue(this.gameState.getCurrentGameRound().getCurrentHand());
+        currentPlayerName.setValue(gameState.getCurrentGameRound().getCurrentPlayer().getUsername());
+        currentHand.setValue(this.gameState.getCurrentGameRound().getCurrentPlayer().getHand().name);
         setImagesForCurrentState();
         if (this.gameState.getCurrentGameRound().isLastTurn()) {
             nextButton.setText("End Round");
@@ -121,8 +121,8 @@ public class GameController {
         } else {
             log.info("Loading next round");
             roundCount.setValue(gameState.getRoundCount());
-            currentPlayerName.setValue(gameState.getCurrentGameRound().getCurrentPlayerName());
-            currentHand.setValue(this.gameState.getCurrentGameRound().getCurrentHand());
+            currentPlayerName.setValue(gameState.getCurrentGameRound().getCurrentPlayer().getUsername());
+            currentHand.setValue(this.gameState.getCurrentGameRound().getCurrentPlayer().getHand().name);
             setImagesForCurrentState();
             nextButton.setText("Next Player");
         }

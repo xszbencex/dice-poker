@@ -1,9 +1,6 @@
 package dicepoker.gamestate;
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.*;
@@ -20,10 +17,7 @@ public class GameRound {
 
     private static final int SECOND_WEIGHT = 100;
 
-    @Getter(value = AccessLevel.NONE)
-    @Setter(value = AccessLevel.NONE)
     private List<RoundPlayer> playerList = new ArrayList<>();
-
     private int currentPlayerIndex;
     private boolean lastTurn;
     private List<Integer> thrownNumbers;
@@ -62,30 +56,19 @@ public class GameRound {
     }
 
     /**
-     * Return the username of the current {@link Player} by
-     * the {@code currentPlayerIndex}.
+     * Returns the current {@link Player} whose numbers are generated in this round.
      *
-     * @return current {@link Player}'s username
+     * @return current {@link Player}
      */
-    public String getCurrentPlayerName() {
-        return this.playerList.get(currentPlayerIndex).username;
-    }
-
-    /**
-     * Return the name of the {@code Hand} the current {@link Player} has by
-     * the {@code currentPlayerIndex}.
-     *
-     * @return name of {@code Hand} the current {@link Player} has
-     */
-    public String getCurrentHand() {
-        return this.playerList.get(currentPlayerIndex).hand.name;
+    public RoundPlayer getCurrentPlayer() {
+        return this.playerList.get(currentPlayerIndex);
     }
 
     /**
      * Method that represents the start of the round by setting
      * default values and generates the first thrown numbers.
      */
-    private void startRound() {
+    public void startRound() {
         this.lastTurn = false;
         this.currentPlayerIndex = 0;
         this.thrownNumbers = generateNumbers();
@@ -99,7 +82,7 @@ public class GameRound {
      *
      * @return a a {@code List} with 5 random numbers in range of 1-6
      */
-    private List<Integer> generateNumbers() {
+    public List<Integer> generateNumbers() {
         return IntStream.range(1, 6)
                 .boxed()
                 .map(i -> ThreadLocalRandom.current().nextInt(1, 6 + 1))
@@ -112,20 +95,22 @@ public class GameRound {
      * same value has been thrown and determines the {@link Hand} of
      * the numbers and adds three weights.
      */
-    private void determineThrowValue() {
-        final RoundPlayer currentPlayer = this.playerList.get(this.currentPlayerIndex);
-        List<Integer> frequencyByIndex = this.constructFrequency();
+    public void determineThrowValue() {
+        final RoundPlayer currentPlayer = this.getCurrentPlayer();
+        List<Integer> frequencyByIndex = this.constructFrequency(this.thrownNumbers);
         int mostOfAKind = Collections.max(frequencyByIndex);
-        int mostFrequent = frequencyByIndex.indexOf(mostOfAKind);
+        int mostFrequent = frequencyByIndex.indexOf(mostOfAKind) + 1;
         switch (mostOfAKind) {
             case 5: {
                 currentPlayer.hand = Hand.FIVE_OF_A_KIND;
                 currentPlayer.thrownValue = currentPlayer.hand.baseValue + mostFrequent * SECOND_WEIGHT;
+                break;
             }
             case 4: {
                 currentPlayer.hand = Hand.FOUR_OF_A_KIND;
                 currentPlayer.thrownValue = currentPlayer.hand.baseValue + mostFrequent * SECOND_WEIGHT
                         + this.sumOfOthers(frequencyByIndex, mostOfAKind);
+                break;
             }
             case 3: {
                 if (frequencyByIndex.contains(2)) {
@@ -135,18 +120,20 @@ public class GameRound {
                 }
                 currentPlayer.thrownValue = currentPlayer.hand.baseValue + mostFrequent * SECOND_WEIGHT
                         + this.sumOfOthers(frequencyByIndex, mostOfAKind);
+                break;
             }
             case 2: {
                 if (frequencyByIndex.indexOf(2) != frequencyByIndex.lastIndexOf(2)) {
                     currentPlayer.hand = Hand.TWO_PAIR;
                     currentPlayer.thrownValue = currentPlayer.hand.baseValue +
-                            (frequencyByIndex.indexOf(2) + frequencyByIndex.lastIndexOf(2)) * SECOND_WEIGHT +
+                            (frequencyByIndex.indexOf(2) + frequencyByIndex.lastIndexOf(2) + 2) * SECOND_WEIGHT +
                             this.sumOfOthers(frequencyByIndex, mostOfAKind);
                 } else {
                     currentPlayer.hand = Hand.ONE_PAIR;
                     currentPlayer.thrownValue = currentPlayer.hand.baseValue + mostFrequent * SECOND_WEIGHT
                             + this.sumOfOthers(frequencyByIndex, mostOfAKind);
                 }
+                break;
             }
             case 1: {
                 if (frequencyByIndex.get(6 - 1) == 1 && frequencyByIndex.get(0) == 0) {
@@ -162,6 +149,7 @@ public class GameRound {
                             .mapToInt(Integer::valueOf)
                             .sum();
                 }
+                break;
             }
             default: log.error("Error while determining thrown value!");
         }
@@ -174,9 +162,9 @@ public class GameRound {
      *
      * @return a {@code List} with the frequency of the indexes
      */
-    private List<Integer> constructFrequency() {
+    public List<Integer> constructFrequency(List<Integer> numList) {
         List<Integer> result = new ArrayList<>(Collections.nCopies(6, 0));
-        this.thrownNumbers.forEach(number -> result.set(number - 1, result.get(number - 1) + 1));
+        numList.forEach(number -> result.set(number - 1, result.get(number - 1) + 1));
         return result;
     }
 
@@ -188,7 +176,7 @@ public class GameRound {
      * @param mostOfAKind the value that will be excluded
      * @return sum of the values meeting the condition
      */
-    private int sumOfOthers(List<Integer> frequencyList, int mostOfAKind) {
+    public int sumOfOthers(List<Integer> frequencyList, int mostOfAKind) {
         int sum = 0;
         for (int i = 0; i < frequencyList.size(); i++) {
             if (frequencyList.get(i) != mostOfAKind) {

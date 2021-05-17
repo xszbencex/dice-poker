@@ -21,7 +21,6 @@ public class DicePokerApplication extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(DicePokerApplication.class.getResource("/fxml/launch.fxml")));
         stage.getIcons().add(new Image(DicePokerApplication.class.getResource("/images/dice_6.png").toExternalForm()));
         stage.setTitle("Dice Poker");
-        stage.setResizable(false);
         stage.setScene(new Scene(root));
         stage.show();
     }
